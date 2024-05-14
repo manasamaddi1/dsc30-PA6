@@ -254,9 +254,8 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     private boolean findKeyHelper(BSTNode currRoot, T key) {
 
-        if (this.root == null) {
-            root = new BSTNode(null, null, key);
-            return true;
+        if (currRoot == null) {
+            return false;
 
         }
 
@@ -283,16 +282,31 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @throws NullPointerException     If eaither key or data is null
      * @throws IllegalArgumentException If key is not found in the BST
      */
-//    public void insertData(T key, T data) {
-//
-//        if (key == null || data == null) {
-//            throw new NullPointerException("The key is null");
-//        }
-//
-//        if (findKey(key)) {
-//            throw new IllegalArgumentException("the key is not found in BST");
-//        }
-//    }
+    public void insertData(T key, T data) {
+
+        if (key == null || data == null) {
+            throw new NullPointerException("The key is null");
+        }
+
+        if (findKey(key) == false) {
+            throw new IllegalArgumentException("the key is not found in BST");
+        }
+    }
+
+    private void insertDataHelper(BSTNode currNode, T key, T data) {
+
+        int num = key.compareTo(currNode.getKey());
+
+        if (num < 0) {
+            insertDataHelper(currNode.getLeft(), key, data);
+        }
+        else if (num > 0) {
+            insertDataHelper(currNode.getRight(), key, data);
+        }
+        else { //condition if there is an existing node
+            currNode.addNewInfo(data);
+        }
+    }
 
     /**
      * Return the LinkedList of the node with key value 'key'
@@ -302,16 +316,39 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @throws NullPointerException     If key is null
      * @throws IllegalArgumentException If key is not found in the BST
      */
-//    public LinkedList<T> findDataList(T key) {
-//
-//        if (key == null) {
-//            throw new NullPointerException("The key is null");
-//        }
-//
-//        if (findKey(key)) {
-//            throw new IllegalArgumentException("the key is not found in BST");
-//        }
-//    }
+    public LinkedList<T> findDataList(T key) {
+
+        if (key == null) {
+            throw new NullPointerException("The key is null");
+        }
+
+        if (findKey(key)) {
+            throw new IllegalArgumentException("the key is not found in BST");
+        }
+
+        return findDataListHelper(root, key);
+    }
+
+    private LinkedList<T> findDataListHelper(BSTNode currNode, T key) {
+
+        if (currNode == null) {
+            return null;
+        }
+
+        int num = key.compareTo(currNode.getKey());
+
+        if (num < 0) {
+            return findDataListHelper(currNode.getLeft(), key);
+        }
+        else if (num > 0) {
+            return findDataListHelper(currNode.getRight(), key);
+        }
+        else { //condition if there is an existing node
+            return currNode.getDataList();
+        }
+
+
+    }
 
     /**
      * Return the height of the tree
