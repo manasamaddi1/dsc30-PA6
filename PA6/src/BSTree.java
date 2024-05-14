@@ -1,6 +1,6 @@
 /*
- * Name: TODO
- * PID:  TODO
+ * Name: Lakshmi Manasa Maddi
+ * PID:  A17735225
  */
 
 import java.util.*;
@@ -8,8 +8,8 @@ import java.util.*;
 /**
  * Binary search tree implementation.
  * 
- * @author TODO
- * @since  TODO
+ * @author Lakshmi Manasa Maddi
+ * @since  5/10/2024
  */
 public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
@@ -36,7 +36,10 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @param key      Node's key
          */
         public BSTNode(BSTNode left, BSTNode right, LinkedList<T> dataList, T key) {
-            /* TODO */
+            this.left = left;
+            this.right = right;
+            this.dataList = dataList;
+            this.key = key;
         }
 
         /**
@@ -49,7 +52,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @param key   Node's key
          */
         public BSTNode(BSTNode left, BSTNode right, T key) {
-            /* TODO */
+            this(left, right, new LinkedList<>(), key);
         }
 
         /**
@@ -58,8 +61,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @return The key
          */
         public T getKey() {
-            /* TODO */
-            return null;
+            return key;
         }
 
         /**
@@ -68,8 +70,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @return The left child of the node
          */
         public BSTNode getLeft() {
-            /* TODO */
-            return null;
+            return left;
         }
 
         /**
@@ -78,8 +79,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @return The right child of the node
          */
         public BSTNode getRight() {
-            /* TODO */
-            return null;
+            return right;
         }
 
         /**
@@ -88,8 +88,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @return The linked list of the node
          */
         public LinkedList<T> getDataList() {
-            /* TODO */
-            return null;
+            return dataList;
         }
 
         /**
@@ -98,7 +97,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @param newleft New left child
          */
         public void setLeft(BSTNode newleft) {
-            /* TODO */
+            left = newleft;
         }
 
         /**
@@ -107,7 +106,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @param newright New right child
          */
         public void setRight(BSTNode newright) {
-            /* TODO */
+            right = newright;
         }
 
         /**
@@ -116,7 +115,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @param newData New linked list
          */
         public void setDataList(LinkedList<T> newData) {
-            /* TODO */
+            dataList = newData;
         }
 
         /**
@@ -125,7 +124,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @param data New data to be appended
          */
         public void addNewInfo(T data) {
-            /* TODO */
+            dataList.add(data);
         }
 
         /**
@@ -136,8 +135,14 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
          * @return True if data was found, false otherwise
          */
         public boolean removeInfo(T data) {
-            /* TODO */
+
+            if (dataList.contains(data)) {
+                dataList.remove(data);
+                return true;
+            }
+
             return false;
+
         }
     }
 
@@ -147,7 +152,8 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * 0-arg constructor that initializes root to null and nelems to 0
      */
     public BSTree() {
-        /* TODO */
+        root = null;
+        nelems = 0;
     }
 
     /**
@@ -156,8 +162,12 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @return The root of BSTree, null if the tree is empty
      */
     public BSTNode getRoot() {
-        /* TODO */
-        return null;
+
+        if (root == null) {
+            return null;
+        }
+
+        return root;
     }
 
     /**
@@ -166,8 +176,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @return The BST size
      */
     public int getSize() {
-        /* TODO */
-        return -1;
+        return nelems;
     }
 
     /**
@@ -177,8 +186,55 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @return true if insertion is successful and false otherwise
      */
     public boolean insert(T key) {
-        /* TODO */
+
+        if (key == null) {
+            throw new NullPointerException("the key is null");
+        }
+
+        if (this.root == null) {
+            root = new BSTNode(null, null, key);
+            nelems += 1;
+            return true;
+
+
+        }
+
+        if (insertHelper(root, key)) {
+            nelems = nelems + 1;
+            return true;
+        }
+
         return false;
+    }
+
+    private boolean insertHelper(BSTNode currRoot, T key) {
+
+        int num = key.compareTo(currRoot.getKey());
+
+        if (num == 0) {
+            return false;
+        }
+
+        if (num < 0) {
+            if (currRoot.getLeft() == null) {
+                currRoot.setLeft(new BSTNode(null, null, key));
+                return true;
+            }
+            else {
+                insertHelper(currRoot.getLeft(), key);
+            }
+        }
+        else if (num > 0) {
+            if (currRoot.getRight() == null) {
+                currRoot.setRight(new BSTNode(null, null, key));
+                return true;
+            }
+            else {
+                return insertHelper(currRoot.getRight(),key);
+            }
+        }
+        return true;
+
     }
 
     /**
@@ -189,8 +245,34 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @throws NullPointerException If key is null
      */
     public boolean findKey(T key) {
-        /* TODO */
-        return false;
+        if (key == null) {
+            throw new NullPointerException("The key provided cannot be null");
+        }
+
+        return findKeyHelper(root, key);
+    }
+
+    private boolean findKeyHelper(BSTNode currRoot, T key) {
+
+        if (this.root == null) {
+            root = new BSTNode(null, null, key);
+            return true;
+
+        }
+
+        int num = key.compareTo(currRoot.getKey());
+
+        if (num < 0) {
+            return findKeyHelper(currRoot.getLeft(), key);
+
+        }
+        else if (num > 0) {
+            return insertHelper(currRoot.getRight(),key);
+        }
+        else {
+            return true;
+        }
+
     }
 
     /**
@@ -201,9 +283,16 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @throws NullPointerException     If eaither key or data is null
      * @throws IllegalArgumentException If key is not found in the BST
      */
-    public void insertData(T key, T data) {
-        /* TODO */
-    }
+//    public void insertData(T key, T data) {
+//
+//        if (key == null || data == null) {
+//            throw new NullPointerException("The key is null");
+//        }
+//
+//        if (findKey(key)) {
+//            throw new IllegalArgumentException("the key is not found in BST");
+//        }
+//    }
 
     /**
      * Return the LinkedList of the node with key value 'key'
@@ -213,10 +302,16 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @throws NullPointerException     If key is null
      * @throws IllegalArgumentException If key is not found in the BST
      */
-    public LinkedList<T> findDataList(T key) {
-        /* TODO */
-        return null;
-    }
+//    public LinkedList<T> findDataList(T key) {
+//
+//        if (key == null) {
+//            throw new NullPointerException("The key is null");
+//        }
+//
+//        if (findKey(key)) {
+//            throw new IllegalArgumentException("the key is not found in BST");
+//        }
+//    }
 
     /**
      * Return the height of the tree
@@ -224,8 +319,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @return The height of the tree, -1 if BST is empty
      */
     public int findHeight() {
-        /* TODO */
-        return -1;
+        return findHeightHelper(root);
     }
 
     /**
@@ -235,9 +329,28 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      * @return The height of the tree, -1 if BST is empty
      */
     private int findHeightHelper(BSTNode root) {
-        /* TODO */
-        return -1;
+
+        if (root == null) {
+            return -1;
+        }
+
+        int lefttreenum = findHeightHelper(root.getLeft()); //find the maximum from both sides
+        int righttreenum = findHeightHelper(root.getRight());
+
+        return Math.max(lefttreenum, righttreenum) + 1;
+
+
+
+
+
     }
+
+
+
+
+
+
+    
 
     /* * * * * BST Iterator * * * * */
 

@@ -1,5 +1,5 @@
 /**
- * TODO: file header
+ * TODO: Lakshmi Manasa Maddi PID: A17735225
  */
 
 import java.util.*;
@@ -7,9 +7,9 @@ import java.util.*;
 public class BSTManual {
 
 /**
- * TODO
- * @author TODO
- * @since  TODO
+ * BST Manual Implementation
+ * @author Lakshmi Manasa Maddi
+ * @since  05/10/24
  */
 
 // No style for this file.	
@@ -29,7 +29,11 @@ public static ArrayList<String>  insertElements() {
 	 * worksheet
 	 */
 
-	//TODO: add strings that represent the BST after insertion. 
+	answer_pr1.add("50"); //LEVEL 0
+	answer_pr1.add("15, 61"); //LEVEL 1
+	answer_pr1.add("13, 37, X, 65"); //LEVEL 2
+	answer_pr1.add("X, X, 25, 38, X, X, X, 92"); //LEVEL 3
+	answer_pr1.add("X, X, X, X, 21, X, X, X, X, X, X, X, X, X, X, X"); //LEVEL 4
 	return answer_pr1;
 
 }
@@ -43,7 +47,11 @@ public static ArrayList<String>  deleteElements() {
 	 * of how to properly enter your answers
 	 */
 
-	//TODO: add strings that represent the BST after 5 deletions. 
+	answer_pr2.add("57");
+	answer_pr2.add("47, 60");
+	answer_pr2.add("20, X, X, 94");
+	answer_pr2.add("X, 21, X, X, X, X, X, X");
+
 	return answer_pr2;
 
 }
@@ -63,7 +71,10 @@ public static ArrayList<String>  traversals() {
 	 * 
 	 * replace "1, 2, 3, 4, 5" with your actual answers
 	 */
-	//TODO: add 3 strings that represent 3 traversals. 
+
+	answer_pr3.add("4, 19, 22, 28, 39, 56, 64, 68, 93, 95, 96, 97, 98"); //--> in-order traversal result
+	answer_pr3.add("39, 19, 4, 22, 28, 93, 64, 56, 68, 96, 95, 98, 97");//--> pre-order traversal result
+	answer_pr3.add("4, 28, 22, 19, 56, 68, 64, 95, 97, 98, 96, 93, 39"); //--> post-order traversal result
 	return answer_pr3;
 
 }
