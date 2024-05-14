@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,6 +77,12 @@ class BSTreeTest {
         assertEquals(true, tree1.insert(14));
         assertEquals(false, tree1.insert(21));
 
+        assertThrows(NullPointerException.class, () -> {
+            tree2.insert(null);
+        });
+
+
+
 
 
 
@@ -94,6 +101,10 @@ class BSTreeTest {
         tree1.insert(17);
         assertTrue(!tree1.findKey(100));
 
+        assertThrows(NullPointerException.class, () -> {
+            tree2.insert(null);
+        });
+
 
     }
 
@@ -108,6 +119,20 @@ class BSTreeTest {
         tree1.insertData(90, 45);
         assertEquals(1, tree1.getSize());
         assertTrue(1 == tree1.getSize());
+
+        assertThrows(NullPointerException.class, () -> {
+            tree2.insert(null);
+        });
+
+        assertThrows(NullPointerException.class, () -> {
+            tree1.insertData(90, null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            tree2.insertData(120, 23);;
+        });
+
+
 
 
     }
@@ -130,6 +155,14 @@ class BSTreeTest {
         tree2.insertData(40, 71);
         LinkedList<Integer> list2 = tree2.findDataList(40);
         assertEquals(true, list2.contains(71));
+
+        assertThrows(NullPointerException.class, () -> {
+            tree2.insert(null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            tree2.insertData(154, 23);;
+        });
 
 
     }
