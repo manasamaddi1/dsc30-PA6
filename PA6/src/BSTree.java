@@ -266,7 +266,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
         }
         else if (num > 0) {
-            return insertHelper(currRoot.getRight(),key);
+            return findKeyHelper(currRoot.getRight(),key);
         }
         else {
             return true;
@@ -290,6 +290,8 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
         if (findKey(key) == false) {
             throw new IllegalArgumentException("the key is not found in BST");
+        } else {
+            this.insertDataHelper(root, key, data);
         }
     }
 
@@ -305,6 +307,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         }
         else { //condition if there is an existing node
             currNode.addNewInfo(data);
+//            nelems = nelems + 1;
         }
     }
 
@@ -322,7 +325,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
             throw new NullPointerException("The key is null");
         }
 
-        if (findKey(key)) {
+        if (!findKey(key)) {
             throw new IllegalArgumentException("the key is not found in BST");
         }
 

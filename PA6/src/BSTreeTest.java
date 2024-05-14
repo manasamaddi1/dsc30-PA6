@@ -103,7 +103,7 @@ class BSTreeTest {
         tree2.insert(30);
         tree2.insert(90);
         tree2.insertData(50, 23);
-        assertEquals(true, tree2.findKey(23));
+        assertEquals(false, tree2.findKey(57));
         tree1.insert(90);
         tree1.insertData(90, 45);
         assertEquals(1, tree1.getSize());
@@ -119,7 +119,7 @@ class BSTreeTest {
         tree2.insert(78);
         tree2.insert(34);
         tree2.insertData(55, 45);
-        LinkedList<Integer> list = tree1.findDataList(55);
+        LinkedList<Integer> list = tree2.findDataList(55);
         assertEquals(true, list.contains(45));
 
 
