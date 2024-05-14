@@ -118,21 +118,32 @@ class BSTreeTest {
         tree2.insert(55);
         tree2.insert(78);
         tree2.insert(34);
+
         tree2.insertData(55, 45);
         LinkedList<Integer> list = tree2.findDataList(55);
         assertEquals(true, list.contains(45));
+
+        tree2.insertData(78, 67);
+        LinkedList<Integer> list1 = tree2.findDataList(78);
+        assertEquals(true, list1.contains(67));
+
+        tree2.insertData(40, 71);
+        LinkedList<Integer> list2 = tree2.findDataList(40);
+        assertEquals(true, list2.contains(71));
 
 
     }
 
     @Test
     public void testfindHeight() {
-        assertTrue(-1 == tree1.findHeight());
+        assertTrue(-1 == tree1.findHeight()); //add something larger and test
         tree1.insert(5);
         assertEquals(0, tree1.findHeight());
         tree1.insert(4);
         assertEquals(1, tree1.findHeight());
         tree1.insert(3);
+        assertEquals(2, tree1.findHeight());
+        tree1.insert(6);
         assertEquals(2, tree1.findHeight());
 
 
