@@ -58,29 +58,24 @@ public class SearchEngine {
         return true;
     }
 
-    private static void populateHelper(BSTree tree, String[] values, String key) {
+    private static void populateHelper(BSTree tree, String[] keys, String value) {
 
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < keys.length; i++) {
 
-            String keylower = key.toLowerCase();
+            String keylower = value.toLowerCase();
 
             if (tree.findKey(keylower) == false) {
                 //if the key that we want to add does not exist, add it below
                 tree.insert(keylower);
-                LinkedList listvalues = new LinkedList();
-                listvalues.add(values[i]);
-                tree.insertData(keylower, listvalues);
+                tree.insertData(keylower, keys[i]);
 
 
 
-
-            } else if (tree.findKey(keylower)) {
-                //if you did find the key looking for and its not in the datalist already
+            } else {
+                //if you did find the key looking for and it's not in the datalist already
                 //add the value to the list
-                LinkedList<String> datalist = tree.findDataList(keylower);
-                if (datalist.contains(values[i]) == false) {
-                    datalist.add(values[i]);
-                }
+
+                tree.insertData(keylower, keys[i]);
             }
         }
 
@@ -94,9 +89,25 @@ public class SearchEngine {
      */
     public static void searchMyQuery(BSTree<String> searchTree, String query) {
 
-        /* TODO */
+
         // process query
         String[] keys = query.toLowerCase().split(" ");
+
+        LinkedList<String> finalList = new LinkedList<>();
+
+        for (int i = 0; i < keys.length; i ++) {
+
+            //stores the linkedlists of data for each key
+            LinkedList<String> items = searchTree.findDataList(keys[i]);
+
+            //if there are items in the linkedlist
+            if (items.isEmpty() == false && items!= null) {
+
+            } else {
+                //if there are no existing items in results
+            }
+
+        }
 
         // search and output intersection results
         // hint: list's addAll() and retainAll() methods could be helpful
@@ -130,14 +141,25 @@ public class SearchEngine {
      */
     public static void main(String[] args) {
 
-        /* TODO */
-        // initialize search trees
+        BSTree<String> movieTree = new BSTree<String>();
+        BSTree<String> studioTree = new BSTree<String>();
+        BSTree<String> ratingTree = new BSTree<String>();
+
+
+
 
         // process command line arguments
         String fileName = args[0];
         int searchKind = Integer.parseInt(args[1]);
 
         // populate search trees
+       System.out.println(populateSearchTrees(movieTree, studioTree, ratingTree, fileName));
+
+        if (populateSearchTrees(movieTree, studioTree, ratingTree, fileName)) {
+            //code
+        } else {
+            System.out.println("File is not found");
+        }
 
         // choose the right tree to query
 
