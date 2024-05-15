@@ -1,6 +1,6 @@
 /*
- * Name: TODO
- * PID:  TODO
+ * Name: Lakshmi Manasa Maddi
+ * PID:  A17735225
  */
 
 import java.io.File;
@@ -12,8 +12,8 @@ import java.util.Scanner;
 /**
  * Search Engine implementation.
  * 
- * @author TODO
- * @since  TODO
+ * @author Lakshmi Manasa Maddi
+ * @since  5/14/24
  */
 public class SearchEngine {
 
@@ -43,8 +43,11 @@ public class SearchEngine {
                 String rating = scanner.nextLine().trim();
                 scanner.nextLine();
 
-                /* TODO */
+
                 // populate three trees with the information you just read
+                populateHelper(movieTree, cast, movie);
+                populateHelper(studioTree, studios, movie);
+                populateHelper(ratingTree, cast, rating);
                 // hint: create a helper function and reuse it to build all three trees
 
             }
@@ -53,6 +56,10 @@ public class SearchEngine {
             return false;
         }
         return true;
+    }
+
+    private static void populateHelper(BSTree tree, String[] values, String key) {
+
     }
 
     /**

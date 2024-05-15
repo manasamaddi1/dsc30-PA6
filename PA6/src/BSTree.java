@@ -207,6 +207,15 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return false;
     }
 
+
+    /**
+     * Helper for the insertData method
+     *
+     * @param currRoot the current node
+     * @param key the number that is referenced when attempting to access a node
+     * @return a boolean value representing if you were able to successfully insert
+     * the key into the BST
+     */
     private boolean insertHelper(BSTNode currRoot, T key) {
 
         int num = key.compareTo(currRoot.getKey());
@@ -253,6 +262,13 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return findKeyHelper(root, key);
     }
 
+    /**
+     * Helper for the insertData method
+     *
+     * @param currRoot the current node
+     * @param key the number that is referenced when attempting to access a node
+     * @return a boolean value representing if you have found the specified key or not
+     */
     private boolean findKeyHelper(BSTNode currRoot, T key) {
 
         if (currRoot == null) {
@@ -296,6 +312,14 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         }
     }
 
+    /**
+     * Helper for the insertData method
+     *
+     * @param currNode the current node
+     * @param key the number that is referenced when attempting to access a node
+     * @param data the data that is it be inserted in a certain node
+     */
+
     private void insertDataHelper(BSTNode currNode, T key, T data) {
 
         int num = key.compareTo(currNode.getKey());
@@ -308,7 +332,6 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         }
         else { //condition if there is an existing node
             currNode.addNewInfo(data);
-//            nelems = nelems + 1;
         }
     }
 
@@ -333,6 +356,14 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return findDataListHelper(root, key);
     }
 
+
+    /**
+     * Helper for the findDataList method
+     *
+     * @param currNode the current node
+     * @param key the number that is referenced when attempting to access a node
+     * @return a LinkedList of the node with the specified key
+     */
     private LinkedList<T> findDataListHelper(BSTNode currNode, T key) {
 
         if (currNode == null) {
@@ -356,7 +387,6 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /**
      * Return the height of the tree
-     *
      * @return The height of the tree, -1 if BST is empty
      */
     public int findHeight() {
@@ -381,40 +411,92 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return Math.max(lefttreenum, righttreenum) + 1;
 
 
-
-
-
     }
 
 
 
 
 
-
-    
 
     /* * * * * BST Iterator * * * * */
 
     public class BSTree_Iterator implements Iterator<T> {
+
+        private Stack<BSTNode> treestack;
+
+
+
+        /**
+         * A constructor that initializes the Stack with the leftPath
+         * of the root
+         */
         public BSTree_Iterator() {
-            /* TODO */
+            treestack = new Stack<>();
+            BSTNode currNode = root;
+
+            while (currNode != null ) {
+                treestack.push(currNode);
+                //reset currNode to being the left path
+                currNode = currNode.getLeft();
+            }
+
         }
+
+
+        /**
+         * Method used to determine if there are nodes left to iterate through to
+         * push onto the stack.
+         * @return a boolean value representing if the Stack is empty. If the stack
+         * is empty, then it should return false, true otherwise.
+         */
 
         public boolean hasNext() {
-            /* TODO */
-            return false;
+            return (!treestack.isEmpty());
         }
 
+        /**
+         * Method that is used to return the next item that there is in the BST
+         * @return the item that is next in the BST
+         * @throws NoSuchElementException if there is no next item within the stack
+         */
         public T next() {
-            /* TODO */
-            return null;
+
+            if (hasNext() == false) {
+                throw new NoSuchElementException("there are no more elements to iterate through");
+            }
+
+            //to return in stacks, you have to pop elements of the stack
+
+            BSTNode currNode = treestack.pop();
+            if (currNode.getRight() != null) {
+                currNode = currNode.getRight();
+
+                while (currNode.getLeft() != null) {
+                    currNode = currNode.getLeft();
+                }
+
+                return currNode.getKey();
+
+
+            }
+
+            return currNode.getKey();
+
+
         }
+
+
     }
 
     public Iterator<T> iterator() {
-        /* TODO */
-        return null;
+        return new BSTree_Iterator();
     }
+
+
+
+
+
+
 
     /* * * * * Extra Credit Methods * * * * */
 

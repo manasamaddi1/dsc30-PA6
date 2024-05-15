@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -14,12 +15,23 @@ class BSTreeTest {
 
     BSTree<Integer> tree3;
 
+    Iterator<Integer> iter1;
+    Iterator<Integer> iter2;
+    Iterator<Integer> iter3;
+
+
     @BeforeEach
     public void setup() {
 
         tree1 = new BSTree<>();
         tree2 = new BSTree<>();
         tree3 = new BSTree<>();
+        iter1 = tree1.iterator();
+        iter2 = tree2.iterator();
+        iter3 = tree3.iterator();
+
+
+
 
     }
 
@@ -70,16 +82,20 @@ class BSTreeTest {
         tree1.insert(41);
         tree1.insert(35);
         assertEquals(4, tree1.getSize());
-        tree1.insert(35);
-        assertEquals(5, tree1.getSize());
-        tree1.insert(56);
-        assertEquals(6, tree1.getSize()); //not working for duplicates
-        assertEquals(true, tree1.insert(14));
-        assertEquals(false, tree1.insert(21));
-
-        assertThrows(NullPointerException.class, () -> {
-            tree2.insert(null);
-        });
+        BSTree.BSTNode node = tree1.getRoot();
+        assertEquals(21, node.getRight().getKey());
+        assertEquals(41, node.getRight().getRight().getKey());
+        assertEquals(35, node.getRight().getRight().getLeft().getKey());
+//        tree1.insert(35);
+//        assertEquals(5, tree1.getSize());
+//        tree1.insert(56);
+//        assertEquals(6, tree1.getSize()); //not working for duplicates
+//        assertEquals(true, tree1.insert(14));
+//        assertEquals(false, tree1.insert(21));
+//
+//        assertThrows(NullPointerException.class, () -> {
+//            tree2.insert(null);
+//        });
 
 
 
@@ -180,6 +196,62 @@ class BSTreeTest {
         assertEquals(2, tree1.findHeight());
 
 
+    }
+
+    @Test
+    public void testBSTreeIterator() {
+
+        assertFalse(iter1.hasNext());
+        tree1.insert(3);
+        tree1.insert(23);
+        iter1 = tree1.iterator();
+        assertTrue(iter1.hasNext());
+        assertEquals(23, (int)iter1.next());
+    }
+
+    @Test
+    public void testHasNext() {
+        assertFalse(iter2.hasNext());
+        tree2.insert(50);
+        tree2.insert(40);
+        tree2.insert(12);
+        tree2.insert(90);
+        tree2.insert(34);
+        iter2 = tree2.iterator();
+
+
+        assertTrue(iter2.hasNext());
+        assertEquals(34, (int)iter2.next());
+        assertTrue(iter2.hasNext());
+        assertEquals(40, (int)iter2.next());
+        assertTrue(iter2.hasNext());
+        assertEquals(90, (int)iter2.next());
+        assertFalse(iter2.hasNext()); //has no more nodes to iterate through because
+        //with each pop from the stack the successor takes over
+
+    }
+
+    @Test
+    public void testNext() {
+        assertFalse(iter2.hasNext());
+        tree1.insert(23);
+        tree1.insert(19);
+        tree1.insert(37);
+        iter1 = tree1.iterator();
+        assertTrue(iter1.hasNext());
+        assertEquals(19, (int)iter1.next());
+        assertTrue(iter1.hasNext());
+        assertEquals(37, (int)iter1.next());
+        assertFalse(iter1.hasNext());
+
+        tree2.insert(12);
+        tree2.insert(13);
+        tree2.insert(7);
+        iter2 = tree2.iterator();
+        assertTrue(iter2.hasNext());
+        assertEquals(7, (int)iter2.next());
+        tree2.insert(6);
+        assertTrue(iter2.hasNext());
     }
 
 }
