@@ -60,6 +60,30 @@ public class SearchEngine {
 
     private static void populateHelper(BSTree tree, String[] values, String key) {
 
+        for (int i = 0; i < values.length; i++) {
+
+            String keylower = key.toLowerCase();
+
+            if (tree.findKey(keylower) == false) {
+                //if the key that we want to add does not exist, add it below
+                tree.insert(keylower);
+                LinkedList listvalues = new LinkedList();
+                listvalues.add(values[i]);
+                tree.insertData(keylower, listvalues);
+
+
+
+
+            } else if (tree.findKey(keylower)) {
+                //if you did find the key looking for and its not in the datalist already
+                //add the value to the list
+                LinkedList<String> datalist = tree.findDataList(keylower);
+                if (datalist.contains(values[i]) == false) {
+                    datalist.add(values[i]);
+                }
+            }
+        }
+
     }
 
     /**
