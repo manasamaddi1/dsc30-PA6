@@ -467,12 +467,18 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
             //to return in stacks, you have to pop elements of the stack
 
-            BSTNode currNode = treestack.pop();
-            if (currNode.getRight() != null) {
-                currNode = currNode.getRight();
 
-                while (currNode.getLeft() != null) {
-                    currNode = currNode.getLeft();
+            BSTNode currNode = treestack.pop();
+            BSTNode temp = currNode.getRight();
+
+            if (temp != null) {
+
+                treestack.push(temp);
+
+
+                while (temp.getLeft() != null) {
+                    temp = temp.getLeft();
+                    treestack.push(temp);
                 }
 
                 return currNode.getKey();

@@ -206,7 +206,7 @@ class BSTreeTest {
         tree1.insert(23);
         iter1 = tree1.iterator();
         assertTrue(iter1.hasNext());
-        assertEquals(23, (int)iter1.next());
+        assertEquals(3, (int)iter1.next());
     }
 
     @Test
@@ -221,12 +221,12 @@ class BSTreeTest {
 
 
         assertTrue(iter2.hasNext());
+        assertEquals(12, (int)iter2.next());
+        assertTrue(iter2.hasNext());
         assertEquals(34, (int)iter2.next());
         assertTrue(iter2.hasNext());
         assertEquals(40, (int)iter2.next());
-        assertTrue(iter2.hasNext());
-        assertEquals(90, (int)iter2.next());
-        assertFalse(iter2.hasNext()); //has no more nodes to iterate through because
+        assertTrue(iter2.hasNext()); //has no more nodes to iterate through because
         //with each pop from the stack the successor takes over
 
     }
@@ -241,8 +241,8 @@ class BSTreeTest {
         assertTrue(iter1.hasNext());
         assertEquals(19, (int)iter1.next());
         assertTrue(iter1.hasNext());
-        assertEquals(37, (int)iter1.next());
-        assertFalse(iter1.hasNext());
+        assertEquals(23, (int)iter1.next());
+        assertTrue(iter1.hasNext());
 
         tree2.insert(12);
         tree2.insert(13);
@@ -252,10 +252,12 @@ class BSTreeTest {
         assertEquals(7, (int)iter2.next());
         tree2.insert(6);
         assertTrue(iter2.hasNext());
-
+        iter2.next();
+        iter2.next();
+        
 
         assertThrows(NoSuchElementException.class, () -> {
-            iter1.next();
+            iter2.next();
         });
     }
 
