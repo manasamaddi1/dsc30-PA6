@@ -188,7 +188,8 @@ public class SearchEngine {
         else {
             Object[] converted = documents.toArray();
             Arrays.sort(converted);
-            System.out.println("Documents related to " + query + " are: " + Arrays.toString(converted));
+            System.out.println("Documents related to " + query +
+                    " are: " + Arrays.toString(converted));
         }
     }
 
