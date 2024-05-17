@@ -20,6 +20,9 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /* * * * * BST Node Inner Class * * * * */
 
+    /**
+     * A protected class where variables are initialized
+     */
     protected class BSTNode {
 
         T key;
@@ -181,9 +184,9 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /**
      * Insert a key into BST
-     * 
      * @param key
      * @return true if insertion is successful and false otherwise
+     * @throws NullPointerException if the key is null
      */
     public boolean insert(T key) {
 
@@ -414,11 +417,15 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
     }
 
 
-
-
-
-
     /* * * * * BST Iterator * * * * */
+
+
+    /**
+     * Helper for the findHeight method
+     *
+     * @param root Root node
+     * @return The height of the tree, -1 if BST is empty
+     */
 
     public class BSTree_Iterator implements Iterator<T> {
 
@@ -427,8 +434,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
 
         /**
-         * A constructor that initializes the Stack with the leftPath
-         * of the root
+         * A constructor that initializes the Stack with the leftPath of the root
          */
         public BSTree_Iterator() {
             treestack = new Stack<>();
@@ -488,13 +494,15 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
             return currNode.getKey();
 
-
         }
-
-
     }
 
+
+    /**
+     * Method created to iterate through the BSTree
+     */
     public Iterator<T> iterator() {
+
         return new BSTree_Iterator();
     }
 
@@ -506,13 +514,13 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /* * * * * Extra Credit Methods * * * * */
 
-    public ArrayList<T> intersection(Iterator<T> iter1, Iterator<T> iter2) {
-        /* TODO */
-        return null;
-    }
-
-    public T levelMax(int level) {
-        /* TODO */
-        return null;
-    }
+//    public ArrayList<T> intersection(Iterator<T> iter1, Iterator<T> iter2) {
+//        /* TODO */
+//        return null;
+//    }
+//
+//    public T levelMax(int level) {
+//        /* TODO */
+//        return null;
+//    }
 }

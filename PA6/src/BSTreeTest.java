@@ -254,7 +254,7 @@ class BSTreeTest {
         assertTrue(iter2.hasNext());
         iter2.next();
         iter2.next();
-        
+
 
         assertThrows(NoSuchElementException.class, () -> {
             iter2.next();

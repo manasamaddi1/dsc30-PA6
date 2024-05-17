@@ -24,7 +24,7 @@ public class SearchEngine {
      * @param studioTree - BST to be populated with studios
      * @param ratingTree - BST to be populated with ratings
      * @param fileName   - name of the input file
-     * @returns false if file not found, true otherwise
+     * @return false if file not found, true otherwise
      */
     public static boolean populateSearchTrees(
             BSTree<String> movieTree, BSTree<String> studioTree,
@@ -58,6 +58,14 @@ public class SearchEngine {
         return true;
     }
 
+
+    /**
+     * Helper method for the PopulateSearchTrees method. It checks if there is an existing key
+     * or not, and depending on that executes a certain part of the for loop to add the data
+     * for a certain key into the tree
+     * @return a boolean value representing if the Stack is empty. If the stack
+     * is empty, then it should return false, true otherwise.
+     */
     private static void populateHelper(BSTree<String> tree, String[] keys, String value) {
 
         for (int i = 0; i < keys.length; i++) {
@@ -78,10 +86,6 @@ public class SearchEngine {
                 }
 
 
-                //if you did find the key looking for and it's not in the datalist already
-                //add the value to the list
-
-                //tree.insertData(keylower, value);
             }
         }
 
