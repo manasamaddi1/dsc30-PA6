@@ -121,26 +121,31 @@ public class SearchEngine {
 
         print(query, finalList);
 
+
+
         for (int i = 0; i < keys.length; i++) {
+
+            if (searchTree.findKey(keys[i])) {
 
             //stores the linkedlists of data for each key
             LinkedList<String> items = searchTree.findDataList(keys[i]);
 
+            items.removeAll(finalList);
+
+
             //if there are items in the linkedlist
-            if (items != null && items.isEmpty() == false) {
-                if (finalList.isEmpty()) {
+
+                if (!items.isEmpty()) {
                     //if the list is empty then add all the items that are in the key
+                    print(keys[i], items);
                     finalList.addAll(items);
-                    print(keys[i], finalList);
-                } else {
-                    //only add items that repeat between both if there already exists items
-                    finalList.removeAll(items);
-                    print(keys[i], finalList);
                 }
+            } else {
+                print(keys[i], null);
             }
 
         }
-        
+
 
 
 
@@ -207,7 +212,7 @@ public class SearchEngine {
 
             String finalstr = new String();
             for (int i = 2; i < args.length; i++) {
-                finalstr += (args[i]);
+                finalstr += (args[i]) + " ";
             }
 
             if (searchKind == 0) {
