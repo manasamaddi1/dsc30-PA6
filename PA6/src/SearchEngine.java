@@ -104,17 +104,20 @@ public class SearchEngine {
         //intersection* of documents that contain all the words
         for (int i = 0; i < keys.length; i++) {
 
-            //stores the linkedlists of data for each key
-            LinkedList<String> items = searchTree.findDataList(keys[i]);
+            if (searchTree.findKey(keys[i])) {
 
-            //if there are items in the linkedlist
-            if (items != null && items.isEmpty() == false) {
-                if (finalList.isEmpty()) {
-                    //if the list is empty then add all the items that are in the key
-                    finalList.addAll(items);
-                } else {
-                    //only add items that repeat between both if there already exists items
-                    finalList.retainAll(items);
+                //stores the linkedlists of data for each key
+                LinkedList<String> items = searchTree.findDataList(keys[i]);
+
+                //if there are items in the linkedlist
+                if (items != null && items.isEmpty() == false) {
+                    if (i == 0) {
+                        //if the list is empty then add all the items that are in the key
+                        finalList.addAll(items);
+                    } else {
+                        //only add items that repeat between both if there already exists items
+                        finalList.retainAll(items);
+                    }
                 }
             }
         }
