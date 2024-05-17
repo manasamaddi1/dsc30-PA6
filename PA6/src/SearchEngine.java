@@ -58,24 +58,30 @@ public class SearchEngine {
         return true;
     }
 
-    private static void populateHelper(BSTree tree, String[] keys, String value) {
+    private static void populateHelper(BSTree<String> tree, String[] keys, String value) {
 
         for (int i = 0; i < keys.length; i++) {
 
-            String keylower = value.toLowerCase();
+            String keylower = keys[i].toLowerCase();
 
-            if (tree.findKey(keylower) == false) {
+            if (!tree.findKey(keylower)) {
                 //if the key that we want to add does not exist, add it below
                 tree.insert(keylower);
-                tree.insertData(keylower, keys[i]);
+                tree.insertData(keylower, value);
 
 
 
             } else {
+
+                if (!tree.findDataList(keylower).contains(value)) {
+                    tree.insertData(keylower, value);
+                }
+
+
                 //if you did find the key looking for and it's not in the datalist already
                 //add the value to the list
 
-                tree.insertData(keylower, keys[i]);
+                //tree.insertData(keylower, value);
             }
         }
 
@@ -95,19 +101,60 @@ public class SearchEngine {
 
         LinkedList<String> finalList = new LinkedList<>();
 
-        for (int i = 0; i < keys.length; i ++) {
+        //intersection* of documents that contain all the words
+        for (int i = 0; i < keys.length; i++) {
 
             //stores the linkedlists of data for each key
             LinkedList<String> items = searchTree.findDataList(keys[i]);
 
             //if there are items in the linkedlist
-            if (items.isEmpty() == false && items!= null) {
+            if (items != null && items.isEmpty() == false) {
+                if (finalList.isEmpty()) {
+                    //if the list is empty then add all the items that are in the key
+                    finalList.addAll(items);
+                } else {
+                    //only add items that repeat between both if there already exists items
+                    finalList.retainAll(items);
+                }
+            }
+        }
 
-            } else {
-                //if there are no existing items in results
+        print(query, finalList);
+
+        for (int i = 0; i < keys.length; i++) {
+
+            //stores the linkedlists of data for each key
+            LinkedList<String> items = searchTree.findDataList(keys[i]);
+
+            //if there are items in the linkedlist
+            if (items != null && items.isEmpty() == false) {
+                if (finalList.isEmpty()) {
+                    //if the list is empty then add all the items that are in the key
+                    finalList.addAll(items);
+                    print(keys[i], finalList);
+                } else {
+                    //only add items that repeat between both if there already exists items
+                    finalList.removeAll(items);
+                    print(keys[i], finalList);
+                }
             }
 
         }
+        
+
+
+
+
+
+//        if (!finalList.isEmpty()) {
+//
+//            break;
+//        }
+
+
+
+
+
 
         // search and output intersection results
         // hint: list's addAll() and retainAll() methods could be helpful
@@ -129,8 +176,7 @@ public class SearchEngine {
         else {
             Object[] converted = documents.toArray();
             Arrays.sort(converted);
-            System.out.println("Documents related to " + query
-                    + " are: " + Arrays.toString(converted));
+            System.out.println("Documents related to " + query + " are: " + Arrays.toString(converted));
         }
     }
 
@@ -153,15 +199,30 @@ public class SearchEngine {
         int searchKind = Integer.parseInt(args[1]);
 
         // populate search trees
-       System.out.println(populateSearchTrees(movieTree, studioTree, ratingTree, fileName));
+       //System.out.println(populateSearchTrees(movieTree, studioTree, ratingTree, fileName));
 
         if (populateSearchTrees(movieTree, studioTree, ratingTree, fileName)) {
-            //code
+
+            //create a for loop iterating through args[2] to the end
+
+            String finalstr = new String();
+            for (int i = 2; i < args.length; i++) {
+                finalstr += (args[i]);
+            }
+
+            if (searchKind == 0) {
+                searchMyQuery(movieTree, finalstr);
+            } else if (searchKind == 1){
+                searchMyQuery(studioTree,finalstr);
+            } else {
+                searchMyQuery(ratingTree, finalstr);
+            }
+
         } else {
             System.out.println("File is not found");
         }
 
-        // choose the right tree to query
 
     }
 }
+
