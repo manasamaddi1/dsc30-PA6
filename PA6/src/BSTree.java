@@ -184,7 +184,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /**
      * Insert a key into BST
-     * @param key
+     * @param key a T type that represents what needs to be inside the node
      * @return true if insertion is successful and false otherwise
      * @throws NullPointerException if the key is null
      */
@@ -500,6 +500,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /**
      * Method created to iterate through the BSTree
+     * @return an iterator object
      */
     public Iterator<T> iterator() {
 

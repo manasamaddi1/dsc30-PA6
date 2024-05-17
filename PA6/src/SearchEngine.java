@@ -63,8 +63,10 @@ public class SearchEngine {
      * Helper method for the PopulateSearchTrees method. It checks if there is an existing key
      * or not, and depending on that executes a certain part of the for loop to add the data
      * for a certain key into the tree
-     * @return a boolean value representing if the Stack is empty. If the stack
-     * is empty, then it should return false, true otherwise.
+     * @param tree a BSNode of type String
+     * @param keys an array of Strings that represents the name of the node
+     * @param value a string that represents the values in the node
+
      */
     private static void populateHelper(BSTree<String> tree, String[] keys, String value) {
 
